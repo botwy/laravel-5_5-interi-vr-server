@@ -19,12 +19,8 @@ export class LoginPage extends Component {
   onChangePassword = (e) => {
     this.setState({password: e.target.value})
   }
+
   render() {
-    if (this.props.isLogin) {
-      return (
-        <div>Login done</div>
-      );
-    }
     return (
       <div className="wrapper">
         <div className="form-signin">
@@ -53,7 +49,7 @@ export class LoginPage extends Component {
               id="rememberMe"
               name="rememberMe"
             />
-              Remember me
+            Remember me
           </label>
           <button
             className="btn btn-lg btn-primary btn-block"

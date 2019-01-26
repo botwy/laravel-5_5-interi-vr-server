@@ -18,6 +18,9 @@ class UserController extends Controller
   }
     public function authenticate()
     {
+        if (Auth::check()) {
+            return response()->json(['auth' =>  "user is login"]);
+        }
         $email = Request::input("email");
         $password = Request::input("password");
         if (Auth::attempt(['email' => $email, 'password' => $password]))
