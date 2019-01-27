@@ -1,0 +1,46 @@
+.titleDiv {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.containerDiv {
+    margin-top: 20px;
+}
+.inputContainer {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.inputFileDiv {
+    display: flex;
+    flex-direction: row;
+}
+.inputFile {
+    border: #d5d5d5 1px solid;
+    width: 150px;
+    background: snow;
+}
+.inputProjectTitle {
+    width: 300px;
+}
+.inputButton {
+    width: 150px;
+}
+.rowDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: #0000fe 1px solid;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.columnTitleDiv {
+    flex: 5;
+    text-align: center;
+}
+.columnDiv {
+    flex: 1;
+    text-align: center
+}

@@ -19,14 +19,15 @@ class UserController extends Controller
     public function authenticate()
     {
         if (Auth::check()) {
-            return response()->json(['auth' =>  "user is login"]);
+            return response()->json(['authStatus' =>  true]);
         }
         $email = Request::input("email");
         $password = Request::input("password");
         if (Auth::attempt(['email' => $email, 'password' => $password]))
         {
-            return response()->json(['email' => $email, 'auth' => true]);
+            return response()->json(['authStatus' => true]);
         }
+        return response()->json(['authStatus' => false]);
     }
 }
 

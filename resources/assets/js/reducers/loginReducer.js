@@ -11,11 +11,8 @@ export const user = handleActions({
     ...state,
   }),
   [USER_LOGIN_SUCCESS]: (state, action) => {
-    const { auth, email } = action.user;
     return ({
       ...state,
-      isLogin: auth,
-      email,
     });
   },
   [USER_LOGIN_ERROR]: (state, action) => ({

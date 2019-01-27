@@ -6,7 +6,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {reducer} from "./reducers/mainReducer";
 
-import LoginPageContainer from "./containers/LoginPageContainer";
+import MainRouter from "./containers/MainRouterContainer";
 
 const store = createStore(
   reducer,
@@ -19,7 +19,7 @@ export default class Main extends Component {
   render() {
     return (
       <Provider store={store}>
-        <LoginPageContainer/>
+        <MainRouter/>
       </Provider>
     );
   }
