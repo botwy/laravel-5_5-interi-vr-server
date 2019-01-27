@@ -26,7 +26,10 @@ const modelFormatObjCreateError = () => ({
 export const createModelFormatObj = (title, objModelFile) => (dispatch) => {
   console.log("localhost:8000/modelFormatObj/create")
   dispatch(modelFormatObjCreateRequestSend())
-  axios.post("/modelFormatObj/create", {title, objModelFile})
+  const formData = new FormData()
+  formData.append("title", title)
+  formData.append("objModelFile", objModelFile)
+  axios.post("/modelFormatObj/create", formData)
     .then(value => {
         if (get(value, "data.status") === "error") {
           dispatch(modelFormatObjCreateError())

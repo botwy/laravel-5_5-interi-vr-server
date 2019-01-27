@@ -13282,7 +13282,10 @@ var createModelFormatObj = exports.createModelFormatObj = function createModelFo
   return function (dispatch) {
     console.log("localhost:8000/modelFormatObj/create");
     dispatch(modelFormatObjCreateRequestSend());
-    _index2.default.post("/modelFormatObj/create", { title: title, objModelFile: objModelFile }).then(function (value) {
+    var formData = new FormData();
+    formData.append("title", title);
+    formData.append("objModelFile", objModelFile);
+    _index2.default.post("/modelFormatObj/create", formData).then(function (value) {
       if ((0, _get2.default)(value, "data.status") === "error") {
         dispatch(modelFormatObjCreateError());
       }
@@ -29927,13 +29930,9 @@ var ModelObjFormatListPage = exports.ModelObjFormatListPage = function (_Compone
       _this.setState({ projectName: e.target.value });
     }, _this.selectFile = function (e) {
       e.preventDefault();
-      var fileReader = new FileReader();
+      var formData = new FormData();
       var file = e.target.files[0];
-      console.log(file);
-      fileReader.onloadend = function () {
-        _this.setState({ objModelFile: file, fileUrl: fileReader.result });
-      };
-      fileReader.readAsDataURL(file);
+      _this.setState({ objModelFile: file });
     }, _this.createModelFormatObj = function () {
       _this.props.createModelFormatObj(_this.state.projectName, _this.state.objModelFile);
     }, _temp), _possibleConstructorReturn(_this, _ret);

@@ -25,13 +25,9 @@ export class ModelObjFormatListPage extends Component {
   }
   selectFile = (e) => {
     e.preventDefault()
-    const fileReader = new FileReader();
+    const formData = new FormData();
     const file = e.target.files[0];
-    console.log(file)
-    fileReader.onloadend = () => {
-      this.setState({objModelFile: file, fileUrl: fileReader.result})
-    }
-    fileReader.readAsDataURL(file)
+    this.setState({objModelFile: file})
   }
   createModelFormatObj = () => {
     this.props.createModelFormatObj(this.state.projectName, this.state.objModelFile)
