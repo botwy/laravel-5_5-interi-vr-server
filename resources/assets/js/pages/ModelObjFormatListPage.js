@@ -1,18 +1,24 @@
 import React, {Component} from "react";
 import "./modelObjFormatStyle.css";
 
-const Row = (props) => (
-  <div className="rowDiv">
-    <div className="columnTitleDiv">{props.title}</div>
-    <div className="columnDiv">
-      <button
-        className="btn btn-sm btn-primary btn-block"
-      >
-        Удалить
-      </button>
+const Row = (props) => {
+  const deleteModelFormatObjHandler = () => {
+    props.onClick(props.modelId)
+  }
+  return (
+    <div className="rowDiv">
+      <div className="columnTitleDiv">{props.title}</div>
+      <div className="columnDiv">
+        <button
+          className="btn btn-sm btn-primary btn-block"
+          onClick={deleteModelFormatObjHandler}
+        >
+          Удалить
+        </button>
+      </div>
     </div>
-  </div>
-)
+  );
+}
 
 export class ModelObjFormatListPage extends Component {
   state = {
@@ -33,7 +39,7 @@ export class ModelObjFormatListPage extends Component {
     this.props.createModelFormatObj(this.state.projectName, this.state.objModelFile)
   }
   render() {
-    const {modelList} = this.props;
+    const {modelList, deleteModelFormatObj} = this.props;
     if (!Array.isArray(modelList)) {
       return <div/>
     }
@@ -67,7 +73,9 @@ export class ModelObjFormatListPage extends Component {
           {modelList.map((model = {}) => (
             <Row
               key={model.id}
+              modelId={model.id}
               title={model.title}
+              onClick={deleteModelFormatObj}
             />
           ))
           }
