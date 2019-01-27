@@ -13278,18 +13278,18 @@ var modelFormatObjCreateError = function modelFormatObjCreateError() {
   };
 };
 
-var createModelFormatObj = exports.createModelFormatObj = function createModelFormatObj(title) {
+var createModelFormatObj = exports.createModelFormatObj = function createModelFormatObj(title, objModelFile) {
   return function (dispatch) {
     console.log("localhost:8000/modelFormatObj/create");
     dispatch(modelFormatObjCreateRequestSend());
-    _index2.default.post("/modelFormatObj/create", { title: title }).then(function (value) {
+    _index2.default.post("/modelFormatObj/create", { title: title, objModelFile: objModelFile }).then(function (value) {
       if ((0, _get2.default)(value, "data.status") === "error") {
         dispatch(modelFormatObjCreateError());
       }
       var models = (0, _get2.default)(value, "data.models");
       dispatch(modelFormatObjCreateSucces(models));
-    }).catch(function (e) {
-      return modelFormatObjCreateError();
+    }, function (e) {
+      return dispatch(modelFormatObjCreateError());
     });
   };
 };
@@ -29920,11 +29920,22 @@ var ModelObjFormatListPage = exports.ModelObjFormatListPage = function (_Compone
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ModelObjFormatListPage.__proto__ || Object.getPrototypeOf(ModelObjFormatListPage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      projectName: ""
+      projectName: "",
+      objModelFile: null,
+      fileUrl: ""
     }, _this.changeProjectName = function (e) {
       _this.setState({ projectName: e.target.value });
+    }, _this.selectFile = function (e) {
+      e.preventDefault();
+      var fileReader = new FileReader();
+      var file = e.target.files[0];
+      console.log(file);
+      fileReader.onloadend = function () {
+        _this.setState({ objModelFile: file, fileUrl: fileReader.result });
+      };
+      fileReader.readAsDataURL(file);
     }, _this.createModelFormatObj = function () {
-      _this.props.createModelFormatObj(_this.state.projectName);
+      _this.props.createModelFormatObj(_this.state.projectName, _this.state.objModelFile);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -29945,7 +29956,8 @@ var ModelObjFormatListPage = exports.ModelObjFormatListPage = function (_Compone
       }), _react2.default.createElement("input", {
         className: "inputFile",
         type: "file",
-        placeholder: "file"
+        placeholder: "file",
+        onChange: this.selectFile
       }), _react2.default.createElement("button", {
         className: "btn btn-sm btn-primary btn-block inputButton",
         onClick: this.createModelFormatObj
@@ -30057,14 +30069,10 @@ var authExecute = exports.authExecute = function authExecute() {
       var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var authData = value.data || {};
-      try {
-        dispatch(authSuccess(authData.authStatus));
-        dispatch((0, _modelFormatObjActions.modelsGetSuccess)(authData.models));
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
-    }).catch(function (e) {
+
+      dispatch(authSuccess(authData.authStatus));
+      dispatch((0, _modelFormatObjActions.modelsGetSuccess)(authData.models));
+    }, function (e) {
       return dispatch(authError(e));
     });
   };

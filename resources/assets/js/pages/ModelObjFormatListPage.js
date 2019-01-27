@@ -17,12 +17,24 @@ const Row = (props) => (
 export class ModelObjFormatListPage extends Component {
   state = {
     projectName: "",
+    objModelFile: null,
+    fileUrl: "",
   }
   changeProjectName = (e) => {
     this.setState({projectName: e.target.value})
   }
+  selectFile = (e) => {
+    e.preventDefault()
+    const fileReader = new FileReader();
+    const file = e.target.files[0];
+    console.log(file)
+    fileReader.onloadend = () => {
+      this.setState({objModelFile: file, fileUrl: fileReader.result})
+    }
+    fileReader.readAsDataURL(file)
+  }
   createModelFormatObj = () => {
-    this.props.createModelFormatObj(this.state.projectName)
+    this.props.createModelFormatObj(this.state.projectName, this.state.objModelFile)
   }
   render() {
     const {modelList} = this.props;
@@ -44,6 +56,7 @@ export class ModelObjFormatListPage extends Component {
               className="inputFile"
               type="file"
               placeholder="file"
+              onChange={this.selectFile}
             />
             <button
               className="btn btn-sm btn-primary btn-block inputButton"

@@ -37,11 +37,13 @@ Route::post('/modelFormatObj/create', function (Request $request) {
         $userId = Auth::id();
        try{
            error_log($request -> input("title"));
-
+           error_log($request -> file("objModelFile"));
+           $path = $request -> file("objModelFile") -> store("modelsFormatObj");
            $title = $request -> input("title");
            $model = new ModelObjFormat;
            $model -> userId = $userId;
            $model -> title = $title;
+           $model -> path = $path;
            $model -> save();
 
            $newModels = ModelObjFormat::where("userId", $userId) -> get();

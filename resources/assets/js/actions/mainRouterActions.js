@@ -24,13 +24,10 @@ export const authExecute = () => (dispatch) => {
   axios.get("/auth")
     .then((value = {}) => {
       const authData = value.data || {};
-      try {
+
         dispatch(authSuccess(authData.authStatus))
         dispatch(modelsGetSuccess(authData.models))
-      } catch (e) {
-        console.log(e.message)
-        throw new Error(e.message)
-      }
-    })
-    .catch((e) => dispatch(authError(e)))
+    },
+      (e) => dispatch(authError(e))
+      )
 }

@@ -23,16 +23,17 @@ const modelFormatObjCreateError = () => ({
   type: MODEL_FORMAT_OBJ_CREATE_ERROR,
 })
 
-export const createModelFormatObj = (title) => (dispatch) => {
+export const createModelFormatObj = (title, objModelFile) => (dispatch) => {
   console.log("localhost:8000/modelFormatObj/create")
   dispatch(modelFormatObjCreateRequestSend())
-  axios.post("/modelFormatObj/create", {title})
+  axios.post("/modelFormatObj/create", {title, objModelFile})
     .then(value => {
-      if (get(value, "data.status") === "error") {
-        dispatch(modelFormatObjCreateError())
-      }
-      const models = get(value, "data.models");
-      dispatch(modelFormatObjCreateSucces(models))
-    })
-    .catch((e) => modelFormatObjCreateError())
+        if (get(value, "data.status") === "error") {
+          dispatch(modelFormatObjCreateError())
+        }
+        const models = get(value, "data.models");
+        dispatch(modelFormatObjCreateSucces(models))
+      },
+      (e) => dispatch(modelFormatObjCreateError())
+    )
 }
