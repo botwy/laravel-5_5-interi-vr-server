@@ -66,6 +66,31 @@ Route::post('/modelFormatObj/create', function (Request $request) {
     return response()->json(['authStatus' => false]);
 });
 
+Route::post('/modelFormatObj/delete', function (Request $request) {
+    if (Auth::check()) {
+        $userId = Auth::id();
+        try{
+            $modelId = $request -> input("modelId");
+            error_log($modelId);
+            $models = ModelObjFormat::where("id", $modelId) -> get();
+            $modelForDelete = $models[0];
+            $path = $modelForDelete -> path;
+            $modelForDelete -> delete();
+            Storage::delete($path);
+
+            $newModels = ModelObjFormat::where("userId", $userId) -> get();
+
+            return response()->json(['success' => true, 'models' => $newModels]);
+        } catch (Exception $e) {
+            $message = $e -> getMessage();
+            error_log($message);
+
+            return response()->json(['message' => $message], 500);
+        }
+    }
+    return response()->json(['authStatus' => false]);
+});
+
 Route::get('/modelFormatObj', function (Request $request) {
     if (Auth::check()) {
         try{
@@ -79,7 +104,7 @@ Route::get('/modelFormatObj', function (Request $request) {
             if ($path == null) {
                 throw new Exception("path of .obj file is null");
             }
-            $content = Storage::get($model -> path);
+            $content = Storage::get($path);
 
             return response($content);
         } catch (Exception $e) {
