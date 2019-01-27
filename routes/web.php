@@ -6,6 +6,7 @@ use App\UserModel;
 use App\ModelObjFormat;
 use App\Console;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,8 +39,15 @@ Route::post('/modelFormatObj/create', function (Request $request) {
        try{
            error_log($request -> input("title"));
            error_log($request -> file("objModelFile"));
-           $path = $request -> file("objModelFile") -> store("modelsFormatObj");
+           $file = $request -> file("objModelFile");
+           if ($file == null) {
+               throw new Exception("file is null");
+           }
+           $path = $file -> store("modelsFormatObj");
            $title = $request -> input("title");
+           if ($title == null || $title == "") {
+               $title = $request -> input("fileName");
+           }
            $model = new ModelObjFormat;
            $model -> userId = $userId;
            $model -> title = $title;
@@ -50,10 +58,36 @@ Route::post('/modelFormatObj/create', function (Request $request) {
            return response()->json(['success' => true, 'models' => $newModels]);
        } catch (Exception $e) {
            $message = $e -> getMessage();
-           error_log($e -> getMessage());
+           error_log($message);
 
            return response()->json(['message' => $message], 500);
        }
+    }
+    return response()->json(['authStatus' => false]);
+});
+
+Route::get('/modelFormatObj', function (Request $request) {
+    if (Auth::check()) {
+        try{
+            $modelId = $request -> input("modelId");
+            $models = ModelObjFormat::where("id", $modelId) -> get();
+            $model = $models[0];
+            $path = $model -> path;
+            error_log($modelId);
+            error_log($model);
+
+            if ($path == null) {
+                throw new Exception("path of .obj file is null");
+            }
+            $content = Storage::get($model -> path);
+
+            return response($content);
+        } catch (Exception $e) {
+            $message = $e -> getMessage();
+            error_log($message);
+
+            return response()->json(['message' => $message], 500);
+        }
     }
     return response()->json(['authStatus' => false]);
 });

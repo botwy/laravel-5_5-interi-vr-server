@@ -13281,10 +13281,12 @@ var modelFormatObjCreateError = function modelFormatObjCreateError() {
 var createModelFormatObj = exports.createModelFormatObj = function createModelFormatObj(title, objModelFile) {
   return function (dispatch) {
     console.log("localhost:8000/modelFormatObj/create");
+    console.log(objModelFile);
     dispatch(modelFormatObjCreateRequestSend());
     var formData = new FormData();
     formData.append("title", title);
     formData.append("objModelFile", objModelFile);
+    formData.append("fileName", (0, _get2.default)(objModelFile, "name"));
     _index2.default.post("/modelFormatObj/create", formData).then(function (value) {
       if ((0, _get2.default)(value, "data.status") === "error") {
         dispatch(modelFormatObjCreateError());
