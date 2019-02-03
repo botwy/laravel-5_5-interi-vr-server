@@ -1,9 +1,22 @@
-import axios from 'axios'
+import axios, {AxiosPromise} from 'axios'
 import {normalize} from 'normalizr'
 import {IRequestOptions, IDispatch, IThunkAction} from './interfaces';
 
+interface ICommon {
+    (name: string): string;
+    title: string;
+    count: number;
 
-const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch) => {
+    comments: Array<string>;
+}
+
+let a: ICommon = <ICommon> ((name: string) => "");
+a.title = ""
+a.count = 1
+a.comments = [""]
+
+
+const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Promise<any> => {
   const { scheme, converterForNormalize, ...requestOptions } = options;
 
   return axios(requestOptions)
@@ -25,9 +38,9 @@ const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch) => {
 }
 
 export const get = (url: string, options: IRequestOptions): IThunkAction => dispatch => {
-  return requestExecute({ method: 'get', url, ...options }, dispatch)
+  return requestExecute({ ...options, method: 'get', url }, dispatch)
 }
 
 export const post = (url: string, options: IRequestOptions): IThunkAction => dispatch => {
-  return requestExecute({ method: 'post', url, ...options }, dispatch)
+  return requestExecute({ ...options, method: 'post', url }, dispatch)
 }
