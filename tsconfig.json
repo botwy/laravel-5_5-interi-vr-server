@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "es6",
+    "target": "es6",
+    "sourceMap": true,
+    "jsx": "react-native",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "strict": false
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

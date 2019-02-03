@@ -5,12 +5,12 @@ import {Provider} from "react-redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {reducer} from "./reducers/mainReducer";
-
+import * as api from './common/api';
 import MainRouter from "./containers/MainRouterContainer";
 
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument({api})))
 )
 
 /* An example React component */

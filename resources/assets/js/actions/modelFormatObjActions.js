@@ -37,7 +37,7 @@ const modelFormatObjDeleteError = () => ({
   type: MODEL_FORMAT_OBJ_DELETE_ERROR,
 })
 
-export const createModelFormatObj = (title, objModelFile) => (dispatch) => {
+export const createModelFormatObj = (title, objModelFile) => (dispatch, getState, { api }) => {
   console.log("localhost:8000/modelFormatObj/create")
   console.log(objModelFile)
   dispatch(modelFormatObjCreateRequestSend())
@@ -45,30 +45,28 @@ export const createModelFormatObj = (title, objModelFile) => (dispatch) => {
   formData.append("title", title)
   formData.append("objModelFile", objModelFile)
   formData.append("fileName", get(objModelFile, "name"))
-  axios.post("/modelFormatObj/create", formData)
-    .then(value => {
-        if (get(value, "data.status") === "error") {
+  dispatch(api.post({url: "/modelFormatObj/create", data: formData}))
+    .then((data = {}) => {
+        if (data.status === "error") {
           dispatch(modelFormatObjCreateError())
         }
-        const models = get(value, "data.models");
-        dispatch(modelFormatObjCreateSucces(models))
+        dispatch(modelFormatObjCreateSucces(data.models))
       },
-      (e) => dispatch(modelFormatObjCreateError())
+      (e) => dispatch(modelFormatObjCreateError(e.message))
     )
 }
 
-export const deleteModelFormatObj = (modelId) => (dispatch) => {
+export const deleteModelFormatObj = (modelId) => (dispatch, getState, { api }) => {
   console.log("localhost:8000/modelFormatObj/delete")
   dispatch(modelFormatObjDeleteRequestSend())
-  axios.post("/modelFormatObj/delete", {modelId})
-    .then(value => {
-        if (get(value, "data.status") === "error") {
+  dispatch(api.post({url: "/modelFormatObj/delete", data: {modelId}}))
+    .then((data = {}) => {
+        if (data.status === "error") {
           dispatch(modelFormatObjDeleteError())
         }
-        const models = get(value, "data.models");
-        dispatch(modelFormatObjDeleteSucces(models))
+        dispatch(modelFormatObjDeleteSucces(data.models))
       },
-      (e) => dispatch(modelFormatObjDeleteError())
+      (e) => dispatch(modelFormatObjDeleteError(e.message))
     )
 }
 
