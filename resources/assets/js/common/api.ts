@@ -2,20 +2,6 @@ import axios, {AxiosPromise} from 'axios'
 import {normalize} from 'normalizr'
 import {IRequestOptions, IDispatch, IThunkAction} from './interfaces';
 
-interface ICommon {
-    (name: string): string;
-    title: string;
-    count: number;
-
-    comments: Array<string>;
-}
-
-let a: ICommon = <ICommon> ((name: string) => "");
-a.title = ""
-a.count = 1
-a.comments = [""]
-
-
 const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Promise<any> => {
   const { scheme, converterForNormalize, ...requestOptions } = options;
 
