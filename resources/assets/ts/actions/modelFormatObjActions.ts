@@ -6,15 +6,13 @@ import {
   MODEL_FORMAT_OBJ_DELETE_REQUEST_SEND,
   MODEL_FORMAT_OBJ_DELETE_SUCCESS,
   MODEL_FORMAT_OBJ_DELETE_ERROR,
+    MODELS_REQUEST_SEND,
+    MODELS_SUCCESS,
+    MODELS_ERROR,
 } from "../constants/actionTypes";
 import axios from "axios/index";
 import get from "lodash/get";
 import {IAuthResponse, IFetchModelResponse, IThunkAction} from "../common/interfaces";
-
-export const modelsGetSuccess = (models) => ({
-  type: MODELS_FORMAT_OBJ_GET_SUCCESS,
-  models,
-})
 
 const modelFormatObjCreateRequestSend = () => ({
   type: MODEL_FORMAT_OBJ_CREATE_REQUEST_SEND,
@@ -37,6 +35,18 @@ const modelFormatObjDeleteSucces = (models) => ({
 })
 const modelFormatObjDeleteError = (errorMsg?: string) => ({
   type: MODEL_FORMAT_OBJ_DELETE_ERROR,
+    errorMsg,
+})
+
+const modelsRequestSend = () => ({
+    type: MODELS_REQUEST_SEND,
+})
+const modelsSucces = (models) => ({
+    type: MODELS_SUCCESS,
+    models,
+})
+const modelsError = (errorMsg?: string) => ({
+    type: MODELS_ERROR,
     errorMsg,
 })
 
@@ -77,5 +87,21 @@ export const deleteModelFormatObj = (modelId): IThunkAction => (dispatch, getSta
       },
       (e) => dispatch(modelFormatObjDeleteError(e.message))
     )
+}
+
+export const fetchModelsFormatObj = (): IThunkAction => (dispatch, getState, { api }) => {
+    console.log("modelFormatObj/auth")
+    const options = {
+        //scheme: {models: [modelEntity]},
+    }
+    dispatch(modelsRequestSend())
+    dispatch(api.get("/modelFormatObj/list", options))
+        .then((data: IAuthResponse | undefined = {}) => {
+                dispatch(modelsSucces(data.models))
+            },
+            (error) => {
+                console.log(error.message)
+                dispatch(modelsError(error.message))
+            })
 }
 

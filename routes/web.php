@@ -31,7 +31,7 @@ Route::get('/auth', function () {
     return response()->json(['authStatus' => false]);
 });
 
-Route::get("/login", "UserController@authenticate");
+Route::post("/login", "UserController@authenticate");
 
 Route::post('/modelFormatObj/create', function (Request $request) {
     if (Auth::check()) {
@@ -107,6 +107,22 @@ Route::get('/modelFormatObj', function (Request $request) {
             $content = Storage::get($path);
 
             return response($content);
+        } catch (Exception $e) {
+            $message = $e -> getMessage();
+            error_log($message);
+
+            return response()->json(['message' => $message], 500);
+        }
+    }
+    return response()->json(['authStatus' => false]);
+});
+
+Route::get('/modelFormatObj/list', function (Request $request) {
+    if (Auth::check()) {
+        $userId = Auth::id();
+        try{
+            $models = ModelObjFormat::where("userId", $userId) -> get();
+            return response()->json(['success' => true, 'models' => $models]);
         } catch (Exception $e) {
             $message = $e -> getMessage();
             error_log($message);

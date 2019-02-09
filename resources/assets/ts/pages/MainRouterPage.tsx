@@ -11,6 +11,7 @@ interface IStateProps {
 }
 export class MainRouterPage extends Component<IDispatchProps&IStateProps> {
   componentDidMount() {
+      console.log(document.cookie)
     this.props.authExecute()
   }
 

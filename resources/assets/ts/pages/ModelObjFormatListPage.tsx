@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import "./modelObjFormatStyle.css";
+import {fetchModelsFormatObj} from "../actions/modelFormatObjActions";
 
 const Row = (props) => {
   const deleteModelFormatObjHandler = () => {
@@ -25,6 +26,9 @@ export class ModelObjFormatListPage extends Component {
     projectName: "",
     objModelFile: null,
     fileUrl: "",
+  }
+  componentDidMount() {
+    this.props.fetchModelsFormatObj();
   }
   changeProjectName = (e) => {
     this.setState({projectName: e.target.value})

@@ -30,7 +30,6 @@ export const authExecute = (): IThunkAction => (dispatch, getState, { api }) => 
   dispatch(api.get("/auth", options))
     .then((data: IAuthResponse | undefined = {}) => {
         dispatch(authSuccess(data.authStatus))
-        dispatch(modelsGetSuccess(data.models))
     },
       (error) => {
         console.log(error.message)

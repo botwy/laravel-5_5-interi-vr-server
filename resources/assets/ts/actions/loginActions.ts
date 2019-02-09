@@ -23,10 +23,12 @@ export const userLoginError = (errorMsg: string) => ({
 
 export const loginExecute = (email: string, password: string): IThunkAction =>
     (dispatch: IDispatch, getState, { api }) => {
-  const urlText = "http://localhost:8000/login?email=" + email + "&password=" + password
-  console.log(urlText)
+  console.log("http://localhost:8000/login")
+        const formData = new FormData()
+        formData.append("email", email)
+        formData.append("password", password)
   dispatch(userLoginRequestSend())
-  dispatch(api.get(urlText))
+  dispatch(api.post("http://localhost:8000/login", {data: formData}))
     .then((data) => dispatch(userLoginSucces(data)),
       (error) => {
         dispatch(userLoginError(error.message))
