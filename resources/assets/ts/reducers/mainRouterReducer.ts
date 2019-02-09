@@ -8,13 +8,10 @@ import {
 import { IMainRouterState } from '../models';
 
 const initialMainRouterState: IMainRouterState = {
-  authStatus: false,
+  authStatus: undefined,
 }
 export const mainRouter = handleActions<IMainRouterState>({
-  [AUTH_REQUEST_SEND]: (state, action) => ({
-    ...state,
-    authStatus: false,
-  }),
+  [AUTH_REQUEST_SEND]: (state) => state,
   [combineActions(AUTH_SUCCESS, USER_LOGIN_SUCCESS)]: (state, action) => ({
     ...state,
     authStatus: action.authStatus,

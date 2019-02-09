@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
 } from "../constants/actionTypes";
 import {modelsGetSuccess} from "./modelFormatObjActions"
+import {IAuthResponse, IThunkAction} from "../common/interfaces";
 
 const modelEntity = new schema.Entity("models")
 
@@ -20,15 +21,14 @@ const authError = (error) => ({
   error,
 })
 
-export const authExecute = () => (dispatch, getState, { api }) => {
+export const authExecute = (): IThunkAction => (dispatch, getState, { api }) => {
   console.log("localhost:8000/auth")
   const options = {
-    url: "/auth",
-    scheme: {models: [modelEntity]},
+    //scheme: {models: [modelEntity]},
   }
   dispatch(authRequestSend())
-  dispatch(api.get(options))
-    .then((data = {}) => {
+  dispatch(api.get("/auth", options))
+    .then((data: IAuthResponse | undefined = {}) => {
         dispatch(authSuccess(data.authStatus))
         dispatch(modelsGetSuccess(data.models))
     },

@@ -9,6 +9,7 @@ import {
 } from "../constants/actionTypes";
 import axios from "axios/index";
 import get from "lodash/get";
+import {IAuthResponse, IFetchModelResponse, IThunkAction} from "../common/interfaces";
 
 export const modelsGetSuccess = (models) => ({
   type: MODELS_FORMAT_OBJ_GET_SUCCESS,
@@ -22,8 +23,9 @@ const modelFormatObjCreateSucces = (models) => ({
   type: MODEL_FORMAT_OBJ_CREATE_SUCCESS,
   models,
 })
-const modelFormatObjCreateError = () => ({
+const modelFormatObjCreateError = (errorMsg?: string) => ({
   type: MODEL_FORMAT_OBJ_CREATE_ERROR,
+  errorMsg,
 })
 
 const modelFormatObjDeleteRequestSend = () => ({
@@ -33,11 +35,12 @@ const modelFormatObjDeleteSucces = (models) => ({
   type: MODEL_FORMAT_OBJ_DELETE_SUCCESS,
   models,
 })
-const modelFormatObjDeleteError = () => ({
+const modelFormatObjDeleteError = (errorMsg?: string) => ({
   type: MODEL_FORMAT_OBJ_DELETE_ERROR,
+    errorMsg,
 })
 
-export const createModelFormatObj = (title, objModelFile) => (dispatch, getState, { api }) => {
+export const createModelFormatObj = (title, objModelFile): IThunkAction => (dispatch, getState, { api }) => {
   console.log("localhost:8000/modelFormatObj/create")
   console.log(objModelFile)
   dispatch(modelFormatObjCreateRequestSend())
@@ -45,8 +48,11 @@ export const createModelFormatObj = (title, objModelFile) => (dispatch, getState
   formData.append("title", title)
   formData.append("objModelFile", objModelFile)
   formData.append("fileName", get(objModelFile, "name"))
-  dispatch(api.post({url: "/modelFormatObj/create", data: formData}))
-    .then((data = {}) => {
+  dispatch(api.post("/modelFormatObj/create", {data: formData}))
+    .then((data: IFetchModelResponse) => {
+        if(!data) {
+            throw new Error("data is undefined")
+        }
         if (data.status === "error") {
           dispatch(modelFormatObjCreateError())
         }
@@ -56,11 +62,14 @@ export const createModelFormatObj = (title, objModelFile) => (dispatch, getState
     )
 }
 
-export const deleteModelFormatObj = (modelId) => (dispatch, getState, { api }) => {
+export const deleteModelFormatObj = (modelId): IThunkAction => (dispatch, getState, { api }) => {
   console.log("localhost:8000/modelFormatObj/delete")
   dispatch(modelFormatObjDeleteRequestSend())
-  dispatch(api.post({url: "/modelFormatObj/delete", data: {modelId}}))
-    .then((data = {}) => {
+  dispatch(api.post("/modelFormatObj/delete", {data: {modelId}}))
+    .then((data: IFetchModelResponse) => {
+            if(!data) {
+                throw new Error("data is undefined")
+            }
         if (data.status === "error") {
           dispatch(modelFormatObjDeleteError())
         }

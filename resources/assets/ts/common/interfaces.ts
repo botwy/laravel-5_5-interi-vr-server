@@ -19,3 +19,15 @@ export interface IThunkExtraArgument {
 export interface IThunkAction extends ThunkAction<any, any, IThunkExtraArgument, any> {
 
 }
+
+interface IModel {
+
+}
+export interface IAuthResponse {
+    authStatus?: boolean;
+    models?: IModel[];
+}
+export interface IFetchModelResponse {
+    status:string;
+    models?: IModel[];
+}
