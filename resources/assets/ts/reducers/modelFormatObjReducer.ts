@@ -8,8 +8,8 @@ import {
   MODEL_FORMAT_OBJ_DELETE_SUCCESS,
   MODEL_FORMAT_OBJ_DELETE_ERROR,
 } from "../constants/actionTypes";
-
-export const modelFormatObj = handleActions({
+import {IModelFormatObjState} from '../models'
+export const modelFormatObj = handleActions<IModelFormatObjState, {models: string[]}>({
   [MODELS_FORMAT_OBJ_GET_SUCCESS]: (state, action) => ({
     ...state,
     modelList: action.models,
@@ -34,4 +34,6 @@ export const modelFormatObj = handleActions({
   [MODEL_FORMAT_OBJ_DELETE_ERROR]: (state, action) => ({
     ...state,
   }),
-}, {})
+}, {
+  modelList: [],
+})

@@ -14,7 +14,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
+//require('./components/Example');
 
 /* Import the Main component */
 import Main from './Main';

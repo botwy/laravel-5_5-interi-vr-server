@@ -7,9 +7,13 @@
     "jsx": "react-native",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "strict": false
+    "strict": false,
+    "outDir": "resources/assets/js"
   },
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "resources/assets/ts/**/*"
   ]
 }

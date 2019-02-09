@@ -12,10 +12,10 @@ interface IReduxState {
 interface IDispatchProps {
     authExecute: () => ThunkAction<any,any,any,any>;
 }
-const mapStateToProps: MapStateToProps<IMappedState, never, IReduxState> = (state) => ({
+const mapStateToProps: MapStateToProps<IMappedState, void, IReduxState> = (state) => ({
   authStatus: state.mainRouter.authStatus,
 })
-const mapDispatchToProps: MapDispatchToProps<IDispatchProps, never> = {
+const mapDispatchToProps: MapDispatchToProps<IDispatchProps, void> = {
   authExecute,
 }
 

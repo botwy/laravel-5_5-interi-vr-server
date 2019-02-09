@@ -25,7 +25,21 @@ mix.webpackConfig({
         use: {
           loader: 'babel-loader',
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        include: path.join(__dirname, 'resources/assets/ts'),
+        use: [
+          'style-loader',
+          {
+            loader: 'typings-for-css-modules-loader',
+            options: {
+              modules: true,
+              namedExport: true
+            }
+          }
+        ]
+      },
     ]
   }
 })

@@ -7,4 +7,4 @@ export const reducer = combineReducers({
   mainRouter,
   user,
   modelFormatObj,
-}, {})
+})

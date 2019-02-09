@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./loginPage/style.css";
 
-export class LoginPage extends Component {
+export class LoginPage extends Component<{loginExecute: any}> {
   state = {
     email: "",
     password: "",
@@ -21,6 +21,7 @@ export class LoginPage extends Component {
   }
 
   render() {
+
     return (
       <div className="wrapper">
         <div className="form-signin">

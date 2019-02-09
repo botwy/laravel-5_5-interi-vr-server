@@ -1,3 +1,4 @@
+import {createAction} from "redux-actions";
 import {
   USER_LOGIN_ERROR,
   USER_LOGIN_REQUEST_SEND,
@@ -8,14 +9,14 @@ import {IDispatch, IThunkAction} from '../common/interfaces';
 interface IUserResponse {
     authStatus?: string,
 }
-const userLoginRequestSend = () => ({
-  type: USER_LOGIN_REQUEST_SEND,
+export const userLoginRequestSend = () => ({
+    type: USER_LOGIN_REQUEST_SEND,
 })
-const userLoginSucces = (user: IUserResponse = {}) => ({
+export const userLoginSucces = (user: IUserResponse = {}) => ({
   type: USER_LOGIN_SUCCESS,
   authStatus: user.authStatus,
 })
-const userLoginError = (errorMsg: string) => ({
+export const userLoginError = (errorMsg: string) => ({
   type: USER_LOGIN_ERROR,
     error: errorMsg,
 })
