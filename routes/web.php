@@ -91,8 +91,7 @@ Route::post('/modelFormatObj/delete', function (Request $request) {
     return response()->json(['authStatus' => false]);
 });
 
-Route::get('/modelFormatObj', function (Request $request) {
-    if (Auth::check()) {
+Route::get('/modelFormatObj', ['middleware' => 'cors', function (Request $request) {
         try{
             $modelId = $request -> input("modelId");
             $models = ModelObjFormat::where("id", $modelId) -> get();
@@ -113,9 +112,7 @@ Route::get('/modelFormatObj', function (Request $request) {
 
             return response()->json(['message' => $message], 500);
         }
-    }
-    return response()->json(['authStatus' => false]);
-});
+}]);
 
 Route::get('/modelFormatObj/list', function (Request $request) {
     if (Auth::check()) {
@@ -123,6 +120,29 @@ Route::get('/modelFormatObj/list', function (Request $request) {
         try{
             $models = ModelObjFormat::where("userId", $userId) -> get();
             return response()->json(['success' => true, 'models' => $models]);
+        } catch (Exception $e) {
+            $message = $e -> getMessage();
+            error_log($message);
+
+            return response()->json(['message' => $message], 500);
+        }
+    }
+    return response()->json(['authStatus' => false]);
+});
+
+Route::get('/modelFormatObj/lastModel', function (Request $request) {
+    if (Auth::check()) {
+        $userId = Auth::id();
+        try{
+            $models = ModelObjFormat::where("userId", $userId) -> get();
+            $lastIndex = count($models) - 1;
+            $path = $models[$lastIndex] -> path;
+            if ($path == null) {
+                throw new Exception("path of .obj file is null");
+            }
+            $content = Storage::get($path);
+
+            return response($content);
         } catch (Exception $e) {
             $message = $e -> getMessage();
             error_log($message);

@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import {ModelObjFormatListPage} from "../pages/ModelObjFormatListPage";
 import {createModelFormatObj, deleteModelFormatObj, fetchModelsFormatObj} from "../actions/modelFormatObjActions";
+import {modelObjFromatListSelector} from '../selectors/modelObjFromatListSelector';
 
 const mapStateToProps = (state) => ({
-  modelList: state.modelFormatObj.modelList,
+  modelList: modelObjFromatListSelector(state),
 })
 const mapDispatchToProps = {
   createModelFormatObj,

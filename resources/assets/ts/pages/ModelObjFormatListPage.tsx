@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import "./modelObjFormatStyle.css";
-import {fetchModelsFormatObj} from "../actions/modelFormatObjActions";
 
 const Row = (props) => {
   const deleteModelFormatObjHandler = () => {
@@ -17,6 +16,9 @@ const Row = (props) => {
           Удалить
         </button>
       </div>
+      <a href={`/vrViewer?modelId=${props.modelId}`} target="_blank">
+        Посмотреть проект
+      </a>
     </div>
   );
 }
@@ -74,7 +76,7 @@ export class ModelObjFormatListPage extends Component {
         </div>
         <div className="titleDiv">Список загруженных файлов в формате .obj</div>
         <div className="containerDiv">
-          {modelList.map((model = {}) => (
+          {modelList.map((model = {}, index) => (
             <Row
               key={model.id}
               modelId={model.id}

@@ -4,14 +4,15 @@ import ModelObjFormatList from "../containers/ModelObjFormatListContainer"
 import {IThunkAction} from "../common/interfaces";
 
 interface IDispatchProps {
-    authExecute: () => IThunkAction;
+  authExecute: () => IThunkAction;
 }
+
 interface IStateProps {
-    authStatus: () => IThunkAction;
+  authStatus: () => IThunkAction;
 }
-export class MainRouterPage extends Component<IDispatchProps&IStateProps> {
+
+export class MainRouterPage extends Component<IDispatchProps & IStateProps> {
   componentDidMount() {
-      console.log(document.cookie)
     this.props.authExecute()
   }
 

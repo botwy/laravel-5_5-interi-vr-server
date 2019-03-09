@@ -1,7 +1,16 @@
 import React, {Component} from "react";
 import "./loginPage/style.css";
 
-export class LoginPage extends Component<{loginExecute: any}> {
+interface ILoginPageState {
+  email: string;
+  password: string;
+}
+
+interface ILoginPageProps {
+  loginExecute: (email: string, password: string) => void;
+}
+
+export class LoginPage extends Component<ILoginPageProps, ILoginPageState> {
   state = {
     email: "",
     password: "",

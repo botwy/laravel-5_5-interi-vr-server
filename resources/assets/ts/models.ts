@@ -8,3 +8,6 @@ export interface IMainRouterState {
 export interface IModelFormatObjState {
     modelList: string[],
 }
+export interface IEntityState {
+    model3d: any,
+}

@@ -26,6 +26,7 @@ interface IModel {
 export interface IAuthResponse {
     authStatus?: boolean;
     models?: IModel[];
+    fetchingIds?: IModel[];
 }
 export interface IFetchModelResponse {
     status:string;

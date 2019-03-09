@@ -1,18 +1,18 @@
 import {
-  MODELS_FORMAT_OBJ_GET_SUCCESS,
   MODEL_FORMAT_OBJ_CREATE_REQUEST_SEND,
   MODEL_FORMAT_OBJ_CREATE_SUCCESS,
   MODEL_FORMAT_OBJ_CREATE_ERROR,
   MODEL_FORMAT_OBJ_DELETE_REQUEST_SEND,
   MODEL_FORMAT_OBJ_DELETE_SUCCESS,
   MODEL_FORMAT_OBJ_DELETE_ERROR,
-    MODELS_REQUEST_SEND,
-    MODELS_SUCCESS,
-    MODELS_ERROR,
+  MODELS_REQUEST_SEND,
+  MODELS_SUCCESS,
+  MODELS_ERROR,
 } from "../constants/actionTypes";
-import axios from "axios/index";
+import {PATH} from '../constants/URL';
 import get from "lodash/get";
 import {IAuthResponse, IFetchModelResponse, IThunkAction} from "../common/interfaces";
+import {simpleScheme} from "../schemes";
 
 const modelFormatObjCreateRequestSend = () => ({
   type: MODEL_FORMAT_OBJ_CREATE_REQUEST_SEND,
@@ -51,14 +51,13 @@ const modelsError = (errorMsg?: string) => ({
 })
 
 export const createModelFormatObj = (title, objModelFile): IThunkAction => (dispatch, getState, { api }) => {
-  console.log("localhost:8000/modelFormatObj/create")
   console.log(objModelFile)
   dispatch(modelFormatObjCreateRequestSend())
   const formData = new FormData()
   formData.append("title", title)
   formData.append("objModelFile", objModelFile)
   formData.append("fileName", get(objModelFile, "name"))
-  dispatch(api.post("/modelFormatObj/create", {data: formData}))
+  dispatch(api.post(`${PATH}/modelFormatObj/create`, {data: formData}))
     .then((data: IFetchModelResponse) => {
         if(!data) {
             throw new Error("data is undefined")
@@ -73,9 +72,8 @@ export const createModelFormatObj = (title, objModelFile): IThunkAction => (disp
 }
 
 export const deleteModelFormatObj = (modelId): IThunkAction => (dispatch, getState, { api }) => {
-  console.log("localhost:8000/modelFormatObj/delete")
   dispatch(modelFormatObjDeleteRequestSend())
-  dispatch(api.post("/modelFormatObj/delete", {data: {modelId}}))
+  dispatch(api.post(`${PATH}modelFormatObj/delete`, {data: {modelId}}))
     .then((data: IFetchModelResponse) => {
             if(!data) {
                 throw new Error("data is undefined")
@@ -90,18 +88,17 @@ export const deleteModelFormatObj = (modelId): IThunkAction => (dispatch, getSta
 }
 
 export const fetchModelsFormatObj = (): IThunkAction => (dispatch, getState, { api }) => {
-    console.log("modelFormatObj/auth")
     const options = {
-        //scheme: {models: [modelEntity]},
+        scheme: simpleScheme,
+        converterForNormalize: (data) => ({entityList: data.models})
     }
     dispatch(modelsRequestSend())
-    dispatch(api.get("/modelFormatObj/list", options))
-        .then((data: IAuthResponse | undefined = {}) => {
-                dispatch(modelsSucces(data.models))
+    dispatch(api.get(`${PATH}/modelFormatObj/list`, options))
+        .then((data: IAuthResponse = {}) => {
+                dispatch(modelsSucces(data.fetchingIds))
             },
             (error) => {
                 console.log(error.message)
                 dispatch(modelsError(error.message))
             })
 }
-

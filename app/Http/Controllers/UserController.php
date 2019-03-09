@@ -23,7 +23,7 @@ class UserController extends Controller
         }
         $email = Request::input("email");
         $password = Request::input("password");
-
+        error_log($email);
         if (Auth::attempt(['email' => $email, 'password' => $password]))
         {
             return response()->json(['authStatus' => true]);
