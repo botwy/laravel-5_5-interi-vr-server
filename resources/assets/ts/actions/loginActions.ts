@@ -20,10 +20,6 @@ export const userLoginError = (errorMsg: string) => ({
   type: USER_LOGIN_ERROR,
     error: errorMsg,
 })
-export const applyChanges = ({ selectedIndex }) => ({
-  type: 'CHANGE_SELECTED_INDEX',
-   selectedIndex,
-})
 
 export const loginExecute = (email: string, password: string): IThunkAction =>
     (dispatch: IDispatch, getState, { api }) => {
