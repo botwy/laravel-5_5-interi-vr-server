@@ -7,12 +7,50 @@ body {
   margin-bottom: 80px;
 }
 
+.form-container {
+  max-width: 380px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+  background-color :#fff;
+  margin: 0;
+  padding: 0;
+}
+
+.tab li {
+  flex: 1;
+  border-radius: .25em 0 0 0;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+  cursor: pointer;
+}
+.tab li.tab-disable {
+   background-color: #f0f0f0;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.tab li.tab-enable {
+  background-color: #fff;
+}
+.border-left {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.border-right {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.tab a {
+  color: #636b6f;
+}
 .form-signin {
   max-width: 380px;
   padding: 15px 35px 45px;
   margin: 0 auto;
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
