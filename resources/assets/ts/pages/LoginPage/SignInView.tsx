@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import "./style.css";
+import InputText from '../../components/InputText';
+
+interface IChangedData {
+  [key: string]: string;
+}
 
 interface IProps {
-  onChangeEmail: () => void;
-  onChangePassword: () => void;
+  onChangeInput: (changedData: IChangedData) => void;
   onClickSigninForm: () => void;
   email: string;
   password: string;
@@ -12,24 +16,19 @@ interface IProps {
 const SignInView: React.FunctionComponent<IProps> = (props) => (
   <div className="form-signin">
     <h2 className="form-signin-heading">Please login</h2>
-    <input
+    <InputText
+      onChange={props.onChangeInput}
       type="text"
-      className="form-control"
-      name="username"
+      fieldName="email"
       placeholder="Email Address"
-      required={false}
-      autoFocus={false}
       value={props.email}
-      onChange={props.onChangeEmail}
     />
-    <input
+    <InputText
+      onChange={props.onChangeInput}
       type="password"
-      className="form-control"
-      name="password"
+      fieldName="password"
       placeholder="Password"
-      required={false}
       value={props.password}
-      onChange={props.onChangePassword}
     />
     <label className="checkbox">
       <input

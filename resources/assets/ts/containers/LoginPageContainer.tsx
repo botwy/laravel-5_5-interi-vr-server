@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import * as loginActions from "../actions/loginActions";
 
+interface IChangedData {
+  [key: string]: string;
+}
+
 interface IState {
   email: string;
   password: string;
@@ -10,6 +14,7 @@ interface IState {
   passwordForSignup: string,
   repeatingPasswordForSignup: string,
   selectedTabIndex: number;
+  [key: string]: string | number;
 }
 
 interface IDispatchProps {
@@ -29,26 +34,12 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
   changeTab = (selectedTabIndex) => {
     this.setState(  { selectedTabIndex });
   }
-  onChangeEmail = (e) => {
-    console.log(e)
-    this.setState({email: e.target.value})
-  }
-  onChangePassword = (e) => {
-    this.setState({password: e.target.value})
+  onChangeInput = (changedData: IChangedData) => {
+    this.setState(changedData);
   }
   onClickSigninForm = () => {
     const {email, password} = this.state;
     this.props.loginExecute(email, password);
-  }
-  onChangeSignupEmail = (e) => {
-    console.log(e)
-    this.setState({emailForSignup: e.target.value})
-  }
-  onChangeSignupPassword = (e) => {
-    this.setState({passwordForSignup: e.target.value})
-  };
-  onChangeSignupRepeatingPassword = (e) => {
-    this.setState({repeatingPasswordForSignup: e.target.value})
   }
   onClickSignupForm = () => {
     const {emailForSignup, passwordForSignup, repeatingPasswordForSignup} = this.state;
@@ -63,12 +54,8 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
         {...this.props}
         {...this.state}
         changeTab={this.changeTab}
-        onChangeEmail={this.onChangeEmail}
-        onChangePassword={this.onChangePassword}
+        onChangeInput={this.onChangeInput}
         onClickSigninForm={this.onClickSigninForm}
-        onChangeSignupEmail={this.onChangeSignupEmail}
-        onChangeSignupPassword={this.onChangeSignupPassword}
-        onChangeSignupRepeatingPassword={this.onChangeSignupRepeatingPassword}
         onClickSignupForm={this.onClickSignupForm}
       />
     );

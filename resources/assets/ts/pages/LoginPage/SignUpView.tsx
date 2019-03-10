@@ -1,10 +1,13 @@
 import React, {Component} from "react";
 import "./style.css";
+import InputText from '../../components/InputText';
+
+interface IChangedData {
+  [key: string]: string;
+}
 
 interface IProps {
-  onChangeEmail: () => void;
-  onChangePassword: () => void;
-  onChangeRepeatingPassword: () => void;
+  onChangeInput: (changedData: IChangedData) => void;
   onClickSignupForm: () => void;
   email: string;
   password: string;
@@ -14,33 +17,26 @@ interface IProps {
 const SignUpView: React.FunctionComponent<IProps> = (props) => (
   <div className="form-signin">
     <h2 className="form-signin-heading">Please create account</h2>
-    <input
+    <InputText
+      onChange={props.onChangeInput}
       type="text"
-      className="form-control"
-      name="username"
+      fieldName="emailForSignup"
       placeholder="Email Address"
-      required={false}
-      autoFocus={false}
       value={props.email}
-      onChange={props.onChangeEmail}
     />
-    <input
+    <InputText
+      onChange={props.onChangeInput}
       type="password"
-      className="form-control"
-      name="password"
+      fieldName="passwordForSignup"
       placeholder="Password"
-      required={false}
       value={props.password}
-      onChange={props.onChangePassword}
     />
-    <input
+    <InputText
+      onChange={props.onChangeInput}
       type="password"
-      className="form-control"
-      name="password"
+      fieldName="repeatingPasswordForSignup"
       placeholder="Repeat password"
-      required={false}
       value={props.repeatingPassword}
-      onChange={props.onChangeRepeatingPassword}
     />
     <button
       className="btn btn-lg btn-primary btn-block"
