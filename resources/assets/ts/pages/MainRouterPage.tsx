@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import LoginPage from "../containers/LoginPageContainer"
 import ModelObjFormatList from "../containers/ModelObjFormatListContainer"
 import {IThunkAction} from "../common/interfaces";
+import { test } from '../utils/Example';
 
 interface IDispatchProps {
   authExecute: () => IThunkAction;
@@ -18,7 +19,7 @@ export class MainRouterPage extends Component<IDispatchProps & IStateProps> {
 
   render() {
     const { authStatus } = this.props;
-
+test();
     if (authStatus == undefined) {
       return <div>...</div>
     }

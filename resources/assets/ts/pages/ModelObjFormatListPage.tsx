@@ -1,5 +1,35 @@
 import React, {Component} from "react";
 import "./modelObjFormatStyle.css";
+import Card from '@material-ui/core/Card';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    //width: 500,
+   // height: 450,
+    width: '100%',
+    height: '100%',
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+  button: {
+    margin: theme.spacing.unit,
+    color: '#ffffff',
+  },
+});
 
 const Row = (props) => {
   const deleteModelFormatObjHandler = () => {
@@ -23,7 +53,7 @@ const Row = (props) => {
   );
 }
 
-export class ModelObjFormatListPage extends Component {
+class ModelObjFormatListPage extends Component {
   state = {
     projectName: "",
     objModelFile: null,
@@ -45,12 +75,29 @@ export class ModelObjFormatListPage extends Component {
     this.props.createModelFormatObj(this.state.projectName, this.state.objModelFile)
   }
   render() {
-    const {modelList, deleteModelFormatObj} = this.props;
+    const {modelList, deleteModelFormatObj, classes} = this.props;
     if (!Array.isArray(modelList)) {
       return <div/>
     }
     return (
-      <div>
+      <div  className={classes.root}>
+        <GridList cellHeight={180} cols={3} className={classes.gridList}>
+          <GridListTile key="Subheader"  cols={3} style={{ height: 'auto' }}>
+            <ListSubheader component="div">Список загруженных файлов в формате .obj</ListSubheader>
+          </GridListTile>
+          {modelList.map(model => (
+              <GridListTile key={model.id}>
+                  <GridListTileBar
+                      title={model.title}
+                      actionIcon={
+                        <a href={`/vrViewer?modelId=${model.modelId}`} target="_blank" className={classes.button}>
+                          Посмотреть проект
+                        </a>
+                      }
+                  />
+              </GridListTile>
+          ))}
+        </GridList>
         <div className="inputContainer">
           <div className="inputFileDiv">
             <input
@@ -90,3 +137,5 @@ export class ModelObjFormatListPage extends Component {
     );
   }
 }
+
+export default withStyles(styles)(ModelObjFormatListPage);
