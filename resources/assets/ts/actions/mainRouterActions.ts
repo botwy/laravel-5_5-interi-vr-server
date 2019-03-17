@@ -4,7 +4,8 @@ import {
   AUTH_ERROR,
 } from "../constants/actionTypes";
 import {PATH} from '../constants/URL';
-import {IAuthResponse, IThunkAction} from "../common/interfaces";
+import {IAuthResponse, IThunkAction} from "../common/models";
+import {Url} from '../UrlManager/UrlManager';
 
 const authRequestSend = () => ({
   type: AUTH_REQUEST_SEND,
@@ -20,7 +21,7 @@ const authError = (error) => ({
 
 export const authExecute = (): IThunkAction => (dispatch, getState, { api }) => {
   dispatch(authRequestSend())
-  dispatch(api.get(`${PATH}/auth`))
+  dispatch(api.get(Url.getAuthUrl()))
     .then((data: IAuthResponse = {}) => {
         dispatch(authSuccess(data.authStatus))
     },

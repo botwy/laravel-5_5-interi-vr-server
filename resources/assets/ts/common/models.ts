@@ -2,6 +2,7 @@ import {Schema} from "normalizr";
 import {AxiosRequestConfig} from "axios";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import { IUrl } from '../models';
 
 export interface IDispatch extends Dispatch {}
 
@@ -10,8 +11,8 @@ export interface IRequestOptions extends AxiosRequestConfig {
     converterForNormalize?: (data: any) => any,
 }
 export interface IApi {
-    get: (url: string, options?: IRequestOptions) => any,
-    post: (url: string, options?: IRequestOptions) => any,
+    get: (url: IUrl, options?: IRequestOptions) => any,
+    post: (url: IUrl, options?: IRequestOptions) => any,
 }
 export interface IThunkExtraArgument {
     api: IApi,
