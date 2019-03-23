@@ -30,5 +30,13 @@ class UserController extends Controller
         }
         return response()->json(['authStatus' => false]);
     }
+
+    public function signupUser() {
+        $email = Request::input("email");
+        $password = Request::input("password");
+        $users = UserModel::where("enail", $email) -> get();
+
+        echo $users;
+    }
 }
 

@@ -1,4 +1,4 @@
-import {IUrl} from "./models";
+import { IUrl } from '../UrlManager/models';
 import {Url} from "./Url";
 import { SERVICES, PATH, HOST } from './constants';
 

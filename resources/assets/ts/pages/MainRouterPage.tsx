@@ -1,25 +1,20 @@
 import React, {Component} from "react";
 import LoginPage from "../containers/LoginPageContainer"
 import ModelObjFormatList from "../containers/ModelObjFormatListContainer"
-import {IThunkAction} from "../common/models";
-import { test } from '../utils/Example';
 
-interface IDispatchProps {
-  authExecute: () => IThunkAction;
+interface IProps {
+  authStatus: boolean;
+  authExecute: () => void;
 }
 
-interface IStateProps {
-  authStatus: () => IThunkAction;
-}
-
-export class MainRouterPage extends Component<IDispatchProps & IStateProps> {
+export class MainRouterPage extends Component<IProps> {
   componentDidMount() {
     this.props.authExecute()
   }
 
   render() {
     const { authStatus } = this.props;
-test();
+
     if (authStatus == undefined) {
       return <div>...</div>
     }

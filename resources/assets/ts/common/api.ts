@@ -5,7 +5,7 @@ import {IRequestOptions, IDispatch, IThunkAction} from './models';
 import {
   MERGE_ENTITIES
 } from "../constants/actionTypes";
-import { IUrl } from '../models';
+import { IUrl } from '../UrlManager/models';
 const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Promise<any> => {
   const { scheme, converterForNormalize, ...requestOptions } = options;
 

@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "strict": false,
+    "allowSyntheticDefaultImports": true,
     "outDir": "resources/assets/js"
   },
   "exclude": [

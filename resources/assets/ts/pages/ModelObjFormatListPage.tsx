@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {IModel} from "../models";
 import "./modelObjFormatStyle.css";
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
@@ -7,49 +8,28 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, StyleRulesCallback, StyleRules, StyledComponentProps } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
+import { styles } from './styles';
 
-const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  addIconDiv: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  fab: {
-    margin: theme.spacing.unit * 2,
-  },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    //width: 500,
-   // height: 450,
-    width: '100%',
-    height: '100%',
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-  button: {
-    margin: theme.spacing.unit,
-    color: '#ffffff',
-  },
-});
+interface IProps extends StyledComponentProps<string> {
+    fetchModelsFormatObj: () => void;
+    createModelFormatObj: (projectName: string, file: string) => void;
+    modelList: IModel[];
+    deleteModelFormatObj:(modelId: string) => void;
+}
 
-class ModelObjFormatListPage extends Component {
+interface IState {
+    projectName: string,
+    objModelFile: string | null,
+    fileUrl: string,
+    isCreateFormShown: boolean,
+}
+
+class ModelObjFormatListPage extends Component<IProps, IState> {
   state = {
     projectName: "",
     objModelFile: null,
@@ -136,7 +116,7 @@ class ModelObjFormatListPage extends Component {
             }
           </div>
           {modelList.map(model => (
-              <GridListTile key={model.id}>
+              <GridListTile key={model.modelId}>
                 <img src="../default2.png"/>
                   <GridListTileBar
                       title={model.title}

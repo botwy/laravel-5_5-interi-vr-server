@@ -1,4 +1,9 @@
-interface IRootState {
+export interface IModel {
+    modelId: string;
+    title: string;
+}
+
+export interface IRootState {
 
 }
 

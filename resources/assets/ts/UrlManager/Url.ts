@@ -1,4 +1,4 @@
-import { IUrl } from './models';
+import { IUrl } from '../UrlManager/models';
 
 export class Url implements IUrl {
   static instance: IUrl;

@@ -32,6 +32,7 @@ Route::get('/auth', function () {
 });
 
 Route::post("/login", "UserController@authenticate");
+Route::post("/createAccount", "UserController@signupUser");
 
 Route::post('/modelFormatObj/create', function (Request $request) {
     if (Auth::check()) {

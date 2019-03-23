@@ -2,7 +2,7 @@ import {Schema} from "normalizr";
 import {AxiosRequestConfig} from "axios";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
-import { IUrl } from '../models';
+import { IUrl } from '../UrlManager/models';
 
 export interface IDispatch extends Dispatch {}
 
