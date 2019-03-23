@@ -6,9 +6,8 @@ import {
   CREATE_ACCOUNT_SUCCESS,
   CREATE_ACCOUNT_FAILURE,
 } from "../constants/actionTypes";
-import {PATH} from '../constants/URL';
 import {IDispatch, IThunkAction} from '../common/models';
-  import {Url} from '../UrlManager/UrlManager';
+import { getUrlByServiceName, SERVICES } from '../UrlManager';
 
 interface IUserResponse {
     authStatus?: string,
@@ -42,7 +41,7 @@ export const loginExecute = (email: string, password: string): IThunkAction =>
     formData.append("password", password)
 
     dispatch(userLoginRequestSend())
-    dispatch(api.post(Url.getLoginUrl(), {data: formData}))
+    dispatch(api.post(getUrlByServiceName(SERVICES.login), {data: formData}))
       .then((data) => dispatch(userLoginSucces(data)),
         (error) => {
           dispatch(userLoginError(error.message))
@@ -55,7 +54,7 @@ export const createAccount = (email: string, password: string): IThunkAction =>
     formData.append("password", password)
 
     dispatch(createAccountRequest())
-    dispatch(api.post(Url.getCreateAccountUrl(), {data: formData}))
+    dispatch(api.post(getUrlByServiceName(SERVICES.createAccount), {data: formData}))
       .then((data) => dispatch(createAccountSuccess(data)),
         (error) => {
           dispatch(createAccountFailure(error.message))

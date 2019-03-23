@@ -13,7 +13,8 @@ import {PATH} from '../constants/URL';
 import get from "lodash/get";
 import {IAuthResponse, IFetchModelResponse, IThunkAction} from "../common/models";
 import {simpleScheme} from "../schemes";
-import {Url} from '../UrlManager/UrlManager';
+import {Url} from '../UrlManager/Url';
+import { getUrlByServiceName, SERVICES } from '../UrlManager';
 
 const modelFormatObjCreateRequestSend = () => ({
   type: MODEL_FORMAT_OBJ_CREATE_REQUEST_SEND,
@@ -58,7 +59,7 @@ export const createModelFormatObj = (title, objModelFile): IThunkAction => (disp
   formData.append("title", title)
   formData.append("objModelFile", objModelFile)
   formData.append("fileName", get(objModelFile, "name"))
-  dispatch(api.post(Url.getModelObjCreateUrl(), {data: formData}))
+  dispatch(api.post(getUrlByServiceName(SERVICES.modelCreate), {data: formData}))
     .then((data: IFetchModelResponse) => {
         if(!data) {
             throw new Error("data is undefined")
@@ -74,7 +75,7 @@ export const createModelFormatObj = (title, objModelFile): IThunkAction => (disp
 
 export const deleteModelFormatObj = (modelId): IThunkAction => (dispatch, getState, { api }) => {
   dispatch(modelFormatObjDeleteRequestSend())
-  dispatch(api.post(Url.getModelObjDeleteUrl(), {data: {modelId}}))
+  dispatch(api.post(getUrlByServiceName(SERVICES.modelDelete), {data: {modelId}}))
     .then((data: IFetchModelResponse) => {
             if(!data) {
                 throw new Error("data is undefined")
@@ -94,7 +95,7 @@ export const fetchModelsFormatObj = (): IThunkAction => (dispatch, getState, { a
         converterForNormalize: (data) => ({entityList: data.models})
     }
     dispatch(modelsRequestSend())
-    dispatch(api.get(Url.getModelObjListUrl(), options))
+    dispatch(api.get(getUrlByServiceName(SERVICES.modelList), options))
         .then((data: IAuthResponse = {}) => {
                 dispatch(modelsSucces(data.fetchingIds))
             },

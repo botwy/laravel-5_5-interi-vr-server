@@ -1,4 +1,5 @@
 import axios, {AxiosPromise} from 'axios'
+import { fetch } from 'fetch'
 import { normalize } from 'normalizr'
 import {IRequestOptions, IDispatch, IThunkAction} from './models';
 import {
@@ -8,12 +9,13 @@ import { IUrl } from '../models';
 const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Promise<any> => {
   const { scheme, converterForNormalize, ...requestOptions } = options;
 
-  return axios(requestOptions)
+  return fetch(requestOptions)
     .then(response => {
         if (!scheme) { return response.data }
 
         const dataForNormalize = converterForNormalize ? converterForNormalize(response.data) : response.data
         const normal = normalize(dataForNormalize, { entityList:[scheme] })
+
         dispatch({
             type: MERGE_ENTITIES,
             entityData: normal.entities,

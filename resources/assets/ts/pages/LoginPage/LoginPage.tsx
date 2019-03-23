@@ -2,6 +2,9 @@ import React, {Component} from "react";
 import "./style.css";
 import SignInView from './SignInView';
 import SignUpView from './SignUpView';
+import { SERVICES } from '../../UrlManager/index';
+
+
 
 interface IChangedData {
   [key: string]: string;

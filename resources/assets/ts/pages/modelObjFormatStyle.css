@@ -13,8 +13,10 @@
     justify-content: center;
 }
 .inputFileDiv {
+    z-index: 10;
+    margin-left: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 .inputFile {
     border: #d5d5d5 1px solid;
@@ -25,6 +27,7 @@
     width: 300px;
 }
 .inputButton {
+    margin-top: 5px;
     width: 150px;
 }
 .rowDiv {
