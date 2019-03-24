@@ -116,12 +116,12 @@ class ModelObjFormatListPage extends Component<IProps, IState> {
             }
           </div>
           {modelList.map(model => (
-              <GridListTile key={model.modelId}>
-                <img src="../default2.png"/>
+              <GridListTile key={model.id}>
+                <img src="./default.png"/>
                   <GridListTileBar
                       title={model.title}
                       actionIcon={
-                        <a href={`/vrViewer?modelId=${model.modelId}`} target="_blank" className={classes.button}>
+                        <a href={`/vrViewer?modelId=${model.id}`} target="_blank" className={classes.button}>
                           Посмотреть проект
                         </a>
                       }

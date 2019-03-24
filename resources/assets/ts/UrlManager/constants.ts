@@ -1,5 +1,5 @@
-export const HOST = 'http://localhost:5656';
-export const PATH = '';
+export const HOST = '';
+export const PATH = '/account/public';
 
 export enum SERVICES {
   login = 'login',

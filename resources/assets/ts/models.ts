@@ -19,6 +19,6 @@ export interface IEntityState {
 }
 
 export interface IModel {
-  modelId: string;
+  id: string;
   title: string;
 }
