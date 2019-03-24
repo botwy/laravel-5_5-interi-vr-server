@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import {connect, MapDispatchToProps, MapStateToProps} from "react-redux";
+import {IRootState} from "../models";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
-import * as loginActions from "../actions/loginActions";
+import { loginExecute, createAccount } from "../actions/loginActions";
 
 interface IState {
   email: string;
@@ -76,14 +77,14 @@ class LoginPageContainer extends Component<IStateProps & IDispatchProps, IState>
   }
 }
 
-const mapStateToProps = state => {
-  const {signupError, signupErrorMessage} = state.user;
+const mapStateToProps: MapStateToProps<IStateProps, void, IRootState> = state => {
+  const {signupError, signupErrorMessage} = state.mainRouter;
 
   return {
     signupErrorMessage: signupError ? signupErrorMessage : '',
   }
 };
 
-const mapDispatchToProps = loginActions;
+const mapDispatchToProps: MapDispatchToProps<IDispatchProps, void> = { loginExecute, createAccount };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPageContainer)

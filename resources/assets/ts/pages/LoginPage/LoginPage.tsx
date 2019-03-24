@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import "./style.css";
 import SignInView from './SignInView';
 import SignUpView from './SignUpView';
-import { InputFieldNames } from "../../enums";
-import { SERVICES } from '../../UrlManager/index';
 
 interface ILoginPageProps {
   loginExecute: (email: string, password: string) => void;

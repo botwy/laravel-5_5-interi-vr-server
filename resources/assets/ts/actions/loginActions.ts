@@ -34,7 +34,7 @@ export const createAccountFailure = (errorMsg: string) => ({
     error: errorMsg,
 })
 
-export const loginExecute = (email: string, password: string): IThunkAction =>
+export const loginExecute = (email: string, password: string) =>
   (dispatch: IDispatch, getState, {api}) => {
     const formData = new FormData()
     formData.append("email", email)
@@ -47,7 +47,7 @@ export const loginExecute = (email: string, password: string): IThunkAction =>
           dispatch(userLoginError(error.message))
         })
 }
-export const createAccount = (email: string, password: string): IThunkAction =>
+export const createAccount = (email: string, password: string) =>
   (dispatch: IDispatch, getState, {api}) => {
     const formData = new FormData()
     formData.append("email", email)

@@ -1,12 +1,7 @@
-import {InputFieldNames} from './enums';
-
-export interface IModel {
-    modelId: string;
-    title: string;
-}
-
 export interface IRootState {
-
+  mainRouter: IMainRouterState;
+  modelFormatObj: IModelFormatObjState;
+  entity: IEntityState;
 }
 
 export interface IMainRouterState {
@@ -18,13 +13,12 @@ export interface IModelFormatObjState {
     modelList: string[],
 }
 export interface IEntityState {
-    model3d: any,
+    model3d: {
+      [key: string]: IModel;
+    },
 }
 
-export interface IInputField {
-    [InputFieldNames.email]: string;
-    [InputFieldNames.password]: string;
-    [InputFieldNames.emailForSignup]: string;
-    [InputFieldNames.passwordForSignup]: string;
-    [InputFieldNames.repeatingPasswordForSignup]: string;
+export interface IModel {
+  modelId: string;
+  title: string;
 }

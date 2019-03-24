@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import "./style.css";
 import InputText from '../../components/InputText';
-import {InputFieldNames} from "../../enums";
 
 interface IProps {
   changeEmail: (value: string) => void;
