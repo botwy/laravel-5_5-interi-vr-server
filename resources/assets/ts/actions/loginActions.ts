@@ -57,6 +57,7 @@ export const createAccount = (email: string, password: string): IThunkAction =>
     dispatch(api.post(getUrlByServiceName(SERVICES.createAccount), {data: formData}))
       .then((data) => dispatch(createAccountSuccess(data)),
         (error) => {
+          console.log(error)
           dispatch(createAccountFailure(error.message))
         })
   }

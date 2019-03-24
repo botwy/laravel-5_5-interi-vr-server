@@ -2,39 +2,35 @@ import React, {Component} from "react";
 import "./style.css";
 import InputText from '../../components/InputText';
 
-interface IChangedData {
-  [key: string]: string;
-}
-
 interface IProps {
-  onChangeInput: (changedData: IChangedData) => void;
+  changeEmailForSignup: (value: string) => void;
+  changePasswordForSignup: (value: string) => void;
+  changeRepeatingPasswordForSignup: (value: string) => void;
   onClickSignupForm: () => void;
   email: string;
   password: string;
   repeatingPassword: string;
+  errorMessage: string;
 }
 
 const SignUpView: React.FunctionComponent<IProps> = (props) => (
   <div className="form-signin">
     <h2 className="form-signin-heading">Please create account</h2>
     <InputText
-      onChange={props.onChangeInput}
+      onChange={props.changeEmailForSignup}
       type="text"
-      fieldName="emailForSignup"
       placeholder="Email Address"
       value={props.email}
     />
     <InputText
-      onChange={props.onChangeInput}
+      onChange={props.changePasswordForSignup}
       type="password"
-      fieldName="passwordForSignup"
       placeholder="Password"
       value={props.password}
     />
     <InputText
-      onChange={props.onChangeInput}
+      onChange={props.changeRepeatingPasswordForSignup}
       type="password"
-      fieldName="repeatingPasswordForSignup"
       placeholder="Repeat password"
       value={props.repeatingPassword}
     />
@@ -44,6 +40,9 @@ const SignUpView: React.FunctionComponent<IProps> = (props) => (
     >
       Create account
     </button>
+    {!!props.errorMessage &&
+    <div>{props.errorMessage}</div>
+    }
   </div>
 );
 

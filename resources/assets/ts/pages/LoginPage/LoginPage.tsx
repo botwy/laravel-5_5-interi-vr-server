@@ -2,19 +2,18 @@ import React, {Component} from "react";
 import "./style.css";
 import SignInView from './SignInView';
 import SignUpView from './SignUpView';
+import { InputFieldNames } from "../../enums";
 import { SERVICES } from '../../UrlManager/index';
-
-
-
-interface IChangedData {
-  [key: string]: string;
-}
 
 interface ILoginPageProps {
   loginExecute: (email: string, password: string) => void;
   changeTab: (selectedTabIndex: number) => void;
   onClickSigninForm: () => void;
-  onChangeInput: (changedData: IChangedData) => void;
+  changeEmail: (value: string) => void;
+  changePassword: (value: string) => void;
+  changeEmailForSignup: (value: string) => void;
+  changePasswordForSignup: (value: string) => void;
+  changeRepeatingPasswordForSignup: (value: string) => void;
   onClickSignupForm: () => void;
   email: string;
   password: string;
@@ -22,6 +21,8 @@ interface ILoginPageProps {
   passwordForSignup: string,
   repeatingPasswordForSignup: string,
   selectedTabIndex: number;
+  signupErrorMessage: string;
+  errorMessage: string;
 }
 
 export class LoginPage extends Component<ILoginPageProps> {
@@ -34,13 +35,19 @@ export class LoginPage extends Component<ILoginPageProps> {
   const {
     selectedTabIndex,
     onClickSigninForm,
-    onChangeInput,
+    changeEmail,
+    changePassword,
+    changeEmailForSignup,
+    changePasswordForSignup,
+    changeRepeatingPasswordForSignup,
     onClickSignupForm,
     email,
     password,
     emailForSignup,
     passwordForSignup,
     repeatingPasswordForSignup,
+    signupErrorMessage,
+    errorMessage,
   } = this.props;
 
     return (
@@ -59,17 +66,21 @@ export class LoginPage extends Component<ILoginPageProps> {
           {selectedTabIndex === 0 ?
             <SignInView
               onClickSigninForm={onClickSigninForm}
-              onChangeInput={onChangeInput}
+              changeEmail={changeEmail}
+              changePassword={changePassword}
               email={email}
               password={password}
             />
           :
            <SignUpView
              onClickSignupForm={onClickSignupForm}
-             onChangeInput={onChangeInput}
+             changeEmailForSignup={changeEmailForSignup}
+             changePasswordForSignup={changePasswordForSignup}
+             changeRepeatingPasswordForSignup={changeRepeatingPasswordForSignup}
              email={emailForSignup}
              password={passwordForSignup}
              repeatingPassword={repeatingPasswordForSignup}
+             errorMessage={errorMessage || signupErrorMessage}
            />
           }
         </div>

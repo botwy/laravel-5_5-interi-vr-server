@@ -3,18 +3,18 @@ import { connect } from "react-redux";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import * as loginActions from "../actions/loginActions";
 
-interface IChangedData {
-  [key: string]: string;
-}
-
 interface IState {
   email: string;
+  emailForSignup: string;
   password: string;
-  emailForSignup: string,
-  passwordForSignup: string,
-  repeatingPasswordForSignup: string,
+  passwordForSignup: string;
+  repeatingPasswordForSignup: string;
   selectedTabIndex: number;
-  [key: string]: string | number;
+  errorMessage: string;
+}
+
+interface IStateProps {
+  signupErrorMessage: string;
 }
 
 interface IDispatchProps {
@@ -22,7 +22,7 @@ interface IDispatchProps {
   createAccount: (emailForSignup: string, passwordForSignup: string) => void;
 }
 
-class LoginPageContainer extends Component<IDispatchProps, IState> {
+class LoginPageContainer extends Component<IStateProps & IDispatchProps, IState> {
   state = {
     selectedTabIndex: 0,
     email: "",
@@ -30,13 +30,22 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
     password: "",
     passwordForSignup: "",
     repeatingPasswordForSignup: "",
+    errorMessage: "",
   }
   changeTab = (selectedTabIndex) => {
     this.setState(  { selectedTabIndex });
   }
-  onChangeInput = (changedData: IChangedData) => {
-    this.setState(changedData);
+
+  changeEmail = (value: string) => { this.setState({email: value, errorMessage: ''}); }
+  changePassword = (value: string) => { this.setState({password: value, errorMessage: ''}); }
+  changeEmailForSignup = (value: string) => { this.setState({emailForSignup: value, errorMessage: ''}); }
+  changePasswordForSignup = (value: string) => {
+    this.setState({passwordForSignup: value, errorMessage: ''});
   }
+  changeRepeatingPasswordForSignup = (value: string) => {
+    this.setState({repeatingPasswordForSignup: value, errorMessage: ''});
+  }
+
   onClickSigninForm = () => {
     const {email, password} = this.state;
     this.props.loginExecute(email, password);
@@ -44,6 +53,7 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
   onClickSignupForm = () => {
     const {emailForSignup, passwordForSignup, repeatingPasswordForSignup} = this.state;
     if (passwordForSignup !== repeatingPasswordForSignup) {
+      this.setState({errorMessage: 'пароль не совпадает с повторным паролем'});
       return;
     }
     this.props.createAccount(emailForSignup, passwordForSignup);
@@ -54,7 +64,11 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
         {...this.props}
         {...this.state}
         changeTab={this.changeTab}
-        onChangeInput={this.onChangeInput}
+        changeEmail={this.changeEmail}
+        changePassword={this.changePassword}
+        changeEmailForSignup={this.changeEmailForSignup}
+        changePasswordForSignup={this.changePasswordForSignup}
+        changeRepeatingPasswordForSignup={this.changePasswordForSignup}
         onClickSigninForm={this.onClickSigninForm}
         onClickSignupForm={this.onClickSignupForm}
       />
@@ -62,6 +76,14 @@ class LoginPageContainer extends Component<IDispatchProps, IState> {
   }
 }
 
+const mapStateToProps = state => {
+  const {signupError, signupErrorMessage} = state.user;
+
+  return {
+    signupErrorMessage: signupError ? signupErrorMessage : '',
+  }
+};
+
 const mapDispatchToProps = loginActions;
 
-export default connect(undefined, mapDispatchToProps)(LoginPageContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageContainer)

@@ -34,9 +34,17 @@ class UserController extends Controller
     public function signupUser() {
         $email = Request::input("email");
         $password = Request::input("password");
-        $users = UserModel::where("enail", $email) -> get();
+        $users = UserModel::where("email", $email) -> get();
+        error_log($users);
+        if (count($users) > 0) {
+            return response()->json(['status' => 'error', 'message' => 'этот email уже зарегистрирован']);
+        }
 
-        echo $users;
+        $newUser = new UserModel();
+        $newUser -> email = $email;
+        $newUser -> password = $password;
+        $newUser -> save();
+        $this->authenticate();
     }
 }
 

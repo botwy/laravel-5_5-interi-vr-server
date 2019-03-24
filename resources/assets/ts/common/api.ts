@@ -9,8 +9,13 @@ import { IUrl } from '../UrlManager/models';
 const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Promise<any> => {
   const { scheme, converterForNormalize, ...requestOptions } = options;
 
-  return fetch(requestOptions)
+  return axios(requestOptions)
     .then(response => {
+
+        if (response.data.status === 'error') {
+            throw new Error(response.data.message);
+        }
+
         if (!scheme) { return response.data }
 
         const dataForNormalize = converterForNormalize ? converterForNormalize(response.data) : response.data
@@ -25,7 +30,6 @@ const requestExecute = (options: IRequestOptions = {}, dispatch: IDispatch): Pro
         return { fetchingIds: normal.result.entityList };
       },
       error => {
-        console.log(error.message)
         throw new Error(error)
       })
 }

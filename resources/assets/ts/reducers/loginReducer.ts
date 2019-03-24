@@ -3,8 +3,9 @@ import {
   USER_LOGIN_ERROR,
   USER_LOGIN_REQUEST_SEND,
   USER_LOGIN_SUCCESS,
+  CREATE_ACCOUNT_REQUEST,
+  CREATE_ACCOUNT_FAILURE,
 } from "../constants/actionTypes";
-import get from "lodash/get";
 
 export const user = handleActions({
   [USER_LOGIN_REQUEST_SEND]: (state, action) => ({
@@ -17,5 +18,6 @@ export const user = handleActions({
   },
   [USER_LOGIN_ERROR]: (state, action) => ({
     ...state,
-  })
-}, {})
+  }),
+},
+{});
