@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\UserModel;
+use Illuminate\Support\Facades\Hash;
 use Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +26,7 @@ class UserController extends Controller
         $email = Request::input("email");
         $password = Request::input("password");
         error_log($email);
+        error_log($password);
         if (Auth::attempt(['email' => $email, 'password' => $password]))
         {
             return response()->json(['authStatus' => true]);
@@ -39,12 +42,23 @@ class UserController extends Controller
         if (count($users) > 0) {
             return response()->json(['status' => 'error', 'message' => 'этот email уже зарегистрирован']);
         }
+        try {
+            $newUser = new UserModel();
+            $newUser->email = $email;
+            $newUser->password = Hash::make($password);
+            $newUser->save();
 
-        $newUser = new UserModel();
-        $newUser -> email = $email;
-        $newUser -> password = $password;
-        $newUser -> save();
-        $this->authenticate();
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                return response()->json(['authStatus' => true]);
+            }
+            return response()->json(['authStatus' => false]);
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            error_log($message);
+
+            return response()->json(['message' => $message], 500);
+        }
+
     }
 }
 

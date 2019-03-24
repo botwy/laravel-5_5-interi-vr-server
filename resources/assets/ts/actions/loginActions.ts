@@ -28,6 +28,7 @@ export const createAccountRequest = () => ({
 })
 export const createAccountSuccess = (user: IUserResponse = {}) => ({
   type: CREATE_ACCOUNT_SUCCESS,
+  authStatus: user.authStatus,
 })
 export const createAccountFailure = (errorMsg: string) => ({
   type: CREATE_ACCOUNT_FAILURE,

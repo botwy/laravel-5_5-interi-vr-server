@@ -69,7 +69,7 @@ class LoginPageContainer extends Component<IStateProps & IDispatchProps, IState>
         changePassword={this.changePassword}
         changeEmailForSignup={this.changeEmailForSignup}
         changePasswordForSignup={this.changePasswordForSignup}
-        changeRepeatingPasswordForSignup={this.changePasswordForSignup}
+        changeRepeatingPasswordForSignup={this.changeRepeatingPasswordForSignup}
         onClickSigninForm={this.onClickSigninForm}
         onClickSignupForm={this.onClickSignupForm}
       />

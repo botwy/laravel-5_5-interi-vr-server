@@ -3,7 +3,10 @@ import {
   AUTH_REQUEST_SEND,
   AUTH_SUCCESS,
   AUTH_ERROR,
-  USER_LOGIN_SUCCESS, CREATE_ACCOUNT_REQUEST, CREATE_ACCOUNT_FAILURE,
+  USER_LOGIN_SUCCESS,
+  CREATE_ACCOUNT_REQUEST,
+  CREATE_ACCOUNT_FAILURE,
+  CREATE_ACCOUNT_SUCCESS,
 } from "../constants/actionTypes";
 import { IMainRouterState } from '../models';
 
@@ -18,7 +21,7 @@ const initialMainRouterState: IMainRouterState = {
 }
 export const mainRouter = handleActions<IMainRouterState, IPayload>({
   [AUTH_REQUEST_SEND]: (state) => state,
-  [combineActions(AUTH_SUCCESS, USER_LOGIN_SUCCESS)]: (state, action) => ({
+  [combineActions(AUTH_SUCCESS, USER_LOGIN_SUCCESS, CREATE_ACCOUNT_SUCCESS)]: (state, action) => ({
     ...state,
     authStatus: action.authStatus,
   }),
