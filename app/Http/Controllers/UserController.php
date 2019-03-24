@@ -40,7 +40,7 @@ class UserController extends Controller
         $users = UserModel::where("email", $email) -> get();
         error_log($users);
         if (count($users) > 0) {
-            return response()->json(['status' => 'error', 'message' => 'этот email уже зарегистрирован']);
+            return response()->json(['status' => 'error', 'message' => 'this email has already registered']);
         }
         try {
             $newUser = new UserModel();
